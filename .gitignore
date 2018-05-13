@@ -1,0 +1,7 @@
+.gradle/
+.externalNativeBuild/
+build*/
+*.kdev4
+*~
+/toolchains
+/third_party/repos/

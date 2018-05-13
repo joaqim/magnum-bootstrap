@@ -1,0 +1,6 @@
+[submodule "third_party/repos/imgui"]
+	path = third_party/repos/imgui
+	url = https://github.com/Zenoobia/imgui
+[submodule "toolchains"]
+	path = toolchains
+	url = https://github.com/mosra/toolchains
