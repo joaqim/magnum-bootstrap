@@ -1,5 +1,6 @@
 .gradle/
 .externalNativeBuild/
+.idea/workspace.xml
 build*/
 *.kdev4
 *~

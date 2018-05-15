@@ -4,3 +4,6 @@
 [submodule "toolchains"]
 	path = toolchains
 	url = https://github.com/mosra/toolchains
+[submodule "third_party/repos/EntityPlus"]
+	path = third_party/repos/EntityPlus
+	url = https://github.com/Yelnats321/EntityPlus

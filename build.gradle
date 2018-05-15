@@ -1,20 +1,26 @@
 buildscript {
     repositories {
         google()
+	    mavenLocal()
         jcenter()
-	    //gradlePluginPortal()
+	    gradlePluginPortal()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2' //2.3.3
-        classpath 'com.netflix.nebula:gradle-lint-plugin:latest.release'
+        classpath 'com.android.tools.build:gradle:3.1.2' //2.3.3 - 3.1.2
+        //classpath 'com.netflix.nebula:gradle-lint-plugin:latest.release'
     }
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'nebula.lint'
+//apply plugin: 'nebula.lint'
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     lintOptions { 
         checkReleaseBuilds false
         abortOnError false
@@ -37,5 +43,14 @@ android {
         cmake {
             path 'CMakeLists.txt'
         }
+    }
+}
+
+
+
+repositories {
+    maven {
+        url 'https://maven.google.com/'
+        name 'Google'
     }
 }
