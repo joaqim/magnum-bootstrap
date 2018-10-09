@@ -1,13 +1,12 @@
 #include "DirectoryWatcher.h"
 
-using Signal = DirectoryWatcher::Signal; 
 
-DirectoryWatcher::DirectoryWatcher(const std::string path) :  _path{path} {
+DirectoryWatcher::DirectoryWatcher(FW::FileWatcher *fileWatcher) :  _fileWatcher(fileWatcher){};
+
+
+
+bool DirectoryWatcher::handleFileAction(FW::WatchID watchid, const FW::String& dir, const FW::String& filename, FW::Action action) {
+  Corrade::Utility::Debug{} << filename;
+  return true;
 }
 
-DirectoryWatcher::~DirectoryWatcher() {
-}
-
-Signal DirectoryWatcher::onFileChanged(const std::string &filename) {
-  return emit(&DirectoryWatcher::onFileChanged, filename ); 
-}

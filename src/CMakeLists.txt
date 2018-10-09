@@ -27,6 +27,7 @@ list(APPEND SOURCES
   Ui.cpp
   DirectoryWatcher.cpp
   GuiGfxPlane.cpp
+  ImageManager.cpp
   )
 
 if(NOT CORRADE_TARGET_ANDROID)
@@ -48,6 +49,7 @@ list(APPEND LIBRARIES
 # Corrade Resources
 corrade_add_resource(Textures_RESOURCES ${PROJECT_SOURCE_DIR}/data/textures/textures.conf)
 list(APPEND SOURCES ${Textures_RESOURCES})
+
 # EntityPlus
 set(EntityPlus_DIR ${PROJECT_SOURCE_DIR}/third_party/repos/EntityPlus)
 add_library(EntityPlus INTERFACE)
@@ -57,10 +59,17 @@ target_include_directories(EntityPlus INTERFACE ${EntityPlus_DIR})
 
 include_directories(SYSTEM ${EntityPlus_DIR})
 
-list(APPEND LIBRARIES
-  EntityPlus
-  )
+list(APPEND LIBRARIES EntityPlus)
 
+# Simple File Watcher
+set(SFW_DIR ${PROJECT_SOURCE_DIR}/third_party/simplefilewatcher)
+file(GLOB SFW_SOURCES ${SFW_DIR}/source/*.cpp)
+
+add_library(SFW STATIC ${SFW_SOURCES})
+set_target_properties(SFW PROPERTIES COMPILE_FLAGS "-w -Wold-style-cast -Wunused-variable") # Suppress Warnings
+#target_include_directories(SFW PUBLIC ${SFW_DIR}/includes)
+include_directories(SYSTEM ${SFW_DIR}/includes)
+list(APPEND LIBRARIES SFW)
 # UI
 #find_package(MagnumExtras REQUIRED Ui)
 #list(APPEND LIBRARIES MagnumExtras::Ui)

@@ -2,74 +2,25 @@
 
 #include <iostream>
 
-#include <Corrade/PluginManager/PluginManager.h>
-#include <Magnum/Trade/AbstractImporter.h>
-#include <Magnum/Trade/ImageData.h>
-#include <Magnum/GL/TextureFormat.h>
-
-
-using namespace Magnum;
-
-typedef PluginManager::Manager<Trade::AbstractImporter> PluginManagerImporter;
-
-class ImageLoader : public AbstractResourceLoader<Trade::ImageData2D> {
- public:
-  std::unique_ptr<Trade::AbstractImporter> _tgaImporter;
-
-  ImageLoader(PluginManagerImporter &pluginManager) {
-    _tgaImporter = pluginManager.loadAndInstantiate("TgaImporter");
-  }
-
-  void doLoad(ResourceKey key) override {
-    Debug{} << "ImageLoader::doLoad()";
-
-    const Utility::Resource rs{"data-textures"};
-
-    if(!_tgaImporter->openData(rs.getRaw("stone.tga"))) {
-      setNotFound(key);
-      Debug{} << "Image not found.";
-      return;
-    }
-    Containers::Optional<Trade::ImageData2D> image = _tgaImporter->image2D(0);
-
-    CORRADE_INTERNAL_ASSERT(image);
-    //set(key, *image, ResourceDataState::Final, ResourcePolicy::Manual);
-  }
-};
-
-class ImageManager : public ResourceManager<Trade::ImageData2D>, public Interconnect::Receiver {
- public:
-  ImageManager() {
-
-  }
-
-  void onFileChanged(const std::string &filename) {
-    Debug{} << filename << " changed!";
-
-    //openFile(filename);
-  }
-};
-
-Application::Application(const Arguments& arguments): Platform::Application{arguments}, _gfxPlane{}
+namespace Magnum {
+Application::Application(const Arguments& arguments): Platform::Application{arguments}, _gfxPlane{}, fileWatcher{}, dw{&fileWatcher}
 {
-  {
-    ImageManager imageManager;
+  ImageManager imageManager;
 
-    PluginManagerImporter pluginManagerImporter;
-    ImageLoader imageLoader{pluginManagerImporter};
-    imageManager.setLoader(&imageLoader);
+  PluginManagerImporter pluginManagerImporter;
+  ImageLoader imageLoader{pluginManagerImporter};
+  imageManager.setLoader(&imageLoader);
 
-    DirectoryWatcher dw{"../data/"};
-    Interconnect::connect(dw, &DirectoryWatcher::onFileChanged, imageManager, &ImageManager::onFileChanged); 
-
-    dw.onFileChanged("test.png");
-  } 
+  fileWatcher.addWatch("../data/tmp", &dw);
 }
 
 void Application::drawEvent() {
   GL::defaultFramebuffer.clear(GL::FramebufferClear::Color);
   _gfxPlane.drawEvent();
   swapBuffers();
+
+  fileWatcher.update();
+  //Debug{} << "Updating";
 }
 
 #ifndef CORRADE_TARGET_ANDROID
@@ -84,4 +35,6 @@ void Application::mousePressEvent(MouseEvent& event) {
 void Application::mouseReleaseEvent(MouseEvent& event) {
 }
 void Application::mouseMoveEvent(MouseMoveEvent& event) {
+  redraw();
+}
 }

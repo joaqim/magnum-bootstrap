@@ -1,17 +1,25 @@
 #ifndef DIRECTORYWATCHER_H
 #define DIRECTORYWATCHER_H
 
-#include <Corrade/Interconnect/Receiver.h>
-#include <Corrade/Interconnect/Emitter.h>
+#include <FileWatcher/FileWatcher.h>
 
-class DirectoryWatcher : public Corrade::Interconnect::Emitter {
+#include <Corrade/Utility/Debug.h>
+
+#include <sys/types.h> // needed by:
+#include <unistd.h> // For impl::getuid()
+#include <pwd.h> // for getpwuid()
+
+
+
+class DirectoryWatcher : public FW::FileWatchListener {
 public:
-  DirectoryWatcher(const std::string path); 
-  virtual ~DirectoryWatcher();
+  DirectoryWatcher(FW::FileWatcher *fileWatcher);
+  virtual ~DirectoryWatcher() = default;
 public:
-  Signal onFileChanged(const std::string &filename);
+  bool handleFileAction(FW::WatchID watchid, const FW::String& dir, const FW::String& filename, FW::Action action);
+
 private:
-  std::string _path;
-}; 
+  FW::FileWatcher *_fileWatcher;
+};
 
 #endif /* DIRECTORYWATCHER_H */

@@ -2,6 +2,9 @@
 
 #include "DirectoryWatcher.h"
 #include "GuiGfxPlane.h"
+#include "ImageManager.h"
+
+#include <FileWatcher/FileWatcher.h>
 
 #include <Magnum/GL/DefaultFramebuffer.h>
 #ifndef CORRADE_TARGET_ANDROID
@@ -19,6 +22,9 @@
 #include <Magnum/Text/Alignment.h>
 
 #include <Magnum/ResourceManager.h>
+
+#include <Corrade/Interconnect/Emitter.h>
+#include <Corrade/Interconnect/Receiver.h>
 
 namespace Magnum {
 
@@ -39,6 +45,9 @@ namespace Magnum {
  private:
 
     GuiGfxPlane _gfxPlane; 
+    FW::FileWatcher fileWatcher;
+    DirectoryWatcher dw;
+ public:
   };
 
 }
