@@ -1,3 +1,4 @@
+#pragma once
 
 #include <Corrade/PluginManager/PluginManager.h>
 #include <Magnum/Trade/AbstractImporter.h>

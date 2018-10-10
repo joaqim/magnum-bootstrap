@@ -12,7 +12,7 @@ fi
 cmake .. -G "Ninja"
 cmake --build .
 if ! pgrep -f "chrome-remote-desktop" ;then
-	./src/MyApplication
+	./src/MyApplication --magnum-log verbose
 else
 	vglrun ./src/MyApplication
 fi

@@ -89,20 +89,7 @@ MyApplication::MyApplication(const Arguments& arguments): Platform::Application{
                        Shaders::VertexColor2D::Position{},
                        Shaders::VertexColor2D::Color{Shaders::VertexColor2D::Color::Components::Three});
 
-#ifndef CORRADE_TARGET_ANDROID
-  // Setup Dear ImGui binding
-  IMGUI_CHECKVERSION();
-  ImGui::CreateContext();
-  ImGuiIO& io = ImGui::GetIO(); (void)io;
-  //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-  ImGui_ImplSdlGL2_Init(this->window());
-  // Setup style
-  ImGui::StyleColorsDark();
-  //ImGui::StyleColorsClassic();
-  redraw();
-#endif
-
-      /*
+  /*
   // Create the UI 
   _ui.emplace(Vector2{windowSize()}, windowSize(), Ui::mcssDarkStyleConfiguration(), "ƒ₀");
   Interconnect::connect(*_ui, &Ui::UserInterface::inputWidgetFocused, *this, &MyApplication::startTextInput);
@@ -123,32 +110,6 @@ void MyApplication::drawEvent() {
   GL::defaultFramebuffer.clear(GL::FramebufferClear::Color);
 
   _mesh.draw(_shader);
-#ifndef CORRADE_TARGET_ANDROID
-  ImGui_ImplSdlGL2_NewFrame(this->window());
-
-  // 1. Show a simple window.
-  // Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets automatically appears in a window called "Debug".
-  if(true){
-    ImGui::Begin("");
-    static float f = 0.0f;
-    static int counter = 0;
-    ImGui::Text("Hello, world!");                           // Display some text (you can use a format string too)
-    ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-
-
-    if (ImGui::Button("Button"))                            // Buttons return true when clicked (NB: most widgets return true when edited/activated)
-      counter++;
-    ImGui::SameLine();
-    ImGui::Text("counter = %d", counter);
-
-    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-    ImGui::End();
-  }
-  ImGui::Render();
-  ImGui_ImplSdlGL2_RenderDrawData(ImGui::GetDrawData());
-#endif
-
-
 
   /*
   // Draw the UI 
@@ -162,7 +123,6 @@ void MyApplication::drawEvent() {
 }
 
 MyApplication::~MyApplication() {
-  ImGui_ImplSdlGL2_Shutdown();
 }
 
 MAGNUM_APPLICATION_MAIN(MyApplication)

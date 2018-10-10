@@ -4,6 +4,9 @@
 #include "GuiGfxPlane.h"
 #include "ImageManager.h"
 
+#include "VoronoiVisualizer.cpp"
+using boost::polygon::VoronoiVisualizer;
+
 #include <FileWatcher/FileWatcher.h>
 
 #include <Magnum/GL/DefaultFramebuffer.h>
@@ -44,10 +47,11 @@ namespace Magnum {
     void mouseMoveEvent(MouseMoveEvent& event) override;
  private:
 
-    GuiGfxPlane _gfxPlane; 
+    GuiGfxPlane _gfxPlane;
     FW::FileWatcher fileWatcher;
     DirectoryWatcher dw;
- public:
+
+    VoronoiVisualizer vv;
   };
 
 }

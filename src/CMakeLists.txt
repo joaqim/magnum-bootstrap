@@ -3,6 +3,8 @@ find_package(Magnum REQUIRED
   Shaders
   Trade
   SceneGraph
+  MeshTools
+  Trade
   )
 list(APPEND LIBRARIES
   Magnum::Application
@@ -11,6 +13,7 @@ list(APPEND LIBRARIES
   Magnum::Shaders
   Magnum::Trade
   Magnum::SceneGraph
+  Magnum::MeshTools
   )
 
 if(NOT CORRADE_TARGET_ANDROID)
@@ -28,6 +31,7 @@ list(APPEND SOURCES
   DirectoryWatcher.cpp
   GuiGfxPlane.cpp
   ImageManager.cpp
+  #VoronoiVisualizer.cpp
   )
 
 if(NOT CORRADE_TARGET_ANDROID)
@@ -77,7 +81,7 @@ list(APPEND LIBRARIES SFW)
 # ImGui
 
 #if(NOT CORRADE_TARGET_ANDROID)
-if(FALSE)
+if(FALSE) #TODO: Make imgui work with Magnum
   set(IMGUI_DIR ${PROJECT_SOURCE_DIR}/third_party/repos/imgui)
   set(imgui_SOURCES
     ${IMGUI_DIR}/imgui.cpp
@@ -86,22 +90,29 @@ if(FALSE)
     )
 
   list(APPEND imgui_SOURCES
+    #${IMGUI_DIR}/examples/opengl3_example/imgui_impl_glfw_gl3.cpp
     ${IMGUI_DIR}/examples/sdl_opengl2_example/imgui_impl_sdl_gl2.cpp
     )
-  find_package(SDL2 REQUIRED)
-  include_directories(${SDL2_INCLUDE_DIR})
 
+  find_package(SDL2 REQUIRED)
+  find_package(GLEW REQUIRED)
+  include_directories(${SDL2_INCLUDE_DIR})
   add_library(imgui STATIC ${imgui_SOURCES})
   set_target_properties(imgui PROPERTIES COMPILE_FLAGS "-w") # Suppress Warnings
   include_directories(SYSTEM
     ${IMGUI_DIR}/
     ${IMGUI_DIR}/examples/sdl_opengl2_example/
-    ${IMGUI_DIR}/examples/sdl_opengl3_example/
     )
 
   list(APPEND LIBRARIES
     imgui
     )
 endif()
+
+
+# Boost
+find_package( Boost COMPONENTS filesystem REQUIRED )
+include_directories( ${Boost_INCLUDE_DIR} )
+list(APPEND LIBRARIES ${Boost_LIBRARIES} )
 
 target_link_libraries(MyApplication PRIVATE ${LIBRARIES})
