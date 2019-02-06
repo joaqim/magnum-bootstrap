@@ -4,8 +4,8 @@
 #include "GuiGfxPlane.h"
 #include "ImageManager.h"
 
-#include "VoronoiVisualizer.cpp"
-using boost::polygon::VoronoiVisualizer;
+//#include "VoronoiVisualizer.cpp"
+//using boost::polygon::VoronoiVisualizer;
 
 #include <FileWatcher/FileWatcher.h>
 
@@ -51,7 +51,7 @@ namespace Magnum {
     FW::FileWatcher fileWatcher;
     DirectoryWatcher dw;
 
-    VoronoiVisualizer vv;
+    //VoronoiVisualizer vv;
   };
 
 }

@@ -1,3 +1,4 @@
+#!/bin/bash
 
 mkdir -p build-unix
 set -e

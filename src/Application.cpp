@@ -4,7 +4,7 @@
 
 namespace Magnum {
 
-Application::Application(const Arguments& arguments): Platform::Application{arguments}, _gfxPlane{}, fileWatcher{}, dw{&fileWatcher}, vv{"../data/voronoi_2.txt"}
+Application::Application(const Arguments& arguments): Platform::Application{arguments}, _gfxPlane{}, fileWatcher{}, dw{&fileWatcher} //, vv{"../data/voronoi_2.txt"}
 {
   ImageManager imageManager;
 
@@ -15,7 +15,7 @@ Application::Application(const Arguments& arguments): Platform::Application{argu
   fileWatcher.addWatch("../data/tmp", &dw);
 
   //vv.draw_points();
-  vv.draw_segments();
+  //vv.draw_segments();
   //vv.draw_edges();
 }
 
@@ -23,7 +23,7 @@ void Application::drawEvent() {
   GL::defaultFramebuffer.clear(GL::FramebufferClear::Color);
   //_gfxPlane.drawEvent();
 
-  vv.draw();
+  //vv.draw();
 
   swapBuffers();
 
@@ -40,7 +40,7 @@ void Application::keyPressEvent(KeyEvent &event) {
 #endif
 
 void Application::mousePressEvent(MouseEvent& event) {
-  vv.addPoint(event.position());
+  //vv.addPoint(event.position());
 }
 void Application::mouseReleaseEvent(MouseEvent& event) {
 }

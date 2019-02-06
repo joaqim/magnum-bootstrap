@@ -111,8 +111,8 @@ endif()
 
 
 # Boost
-find_package( Boost COMPONENTS filesystem REQUIRED )
-include_directories( ${Boost_INCLUDE_DIR} )
-list(APPEND LIBRARIES ${Boost_LIBRARIES} )
+#find_package( Boost COMPONENTS filesystem REQUIRED )
+#include_directories( ${Boost_INCLUDE_DIR} )
+#list(APPEND LIBRARIES ${Boost_LIBRARIES} )
 
 target_link_libraries(MyApplication PRIVATE ${LIBRARIES})
